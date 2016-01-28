@@ -1,8 +1,6 @@
-# Gracenote::Rb
+# Gracenote-Rb
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/gracenote/rb`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Gracenote client for modern Ruby
 
 ## Installation
 
@@ -22,7 +20,23 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Registration
+
+Run this snippet only once and your keep your user_id somewhere.
+
+```
+> require 'gracenote-rb'
+> Gracenote::Client.new(client_id: 'XXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX').register
+> F3180SG7792B09ZPN7-UFC6XA8FV3RQ80K0RO7FURV76GQSDM16
+```
+
+### Search
+
+```
+> require 'gracenote-rb'
+> client = Gracenote::Client.new(client_id: 'XXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', user_id: 'F3180SG7792B09ZPN7-UFC6XA8FV3RQ80K0RO7FURV76GQSDM16')
+> client.search(artist: "Suchmos")
+```
 
 ## Development
 
@@ -38,4 +52,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
