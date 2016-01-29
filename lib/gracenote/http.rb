@@ -1,5 +1,7 @@
 require "faraday"
 require "faraday_middleware"
+require "faraday/conductivity"
+require "logger"
 
 module Gracenote
   module Http
@@ -24,6 +26,7 @@ module Gracenote
       @agent ||= begin
         Faraday.new(url: host) do |conn|
           conn.response :xml,  :content_type => /\bxml$/
+          conn.use Faraday::Conductivity::ExtendedLogging, logger: ::Logger.new('log/faraday.log')
           conn.adapter Faraday.default_adapter
         end
       end
