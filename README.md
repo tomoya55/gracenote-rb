@@ -1,5 +1,7 @@
 # Gracenote-Rb
 
+[![Build Status](https://travis-ci.org/tomoya55/gracenote-rb.svg?branch=master)](https://travis-ci.org/tomoya55/gracenote-rb)
+
 Gracenote client for modern Ruby
 
 ## Installation
