@@ -86,6 +86,7 @@ module Gracenote
         <GN_ID>153857542-F5B1994A6C9EBF79D7FFB02EDF189A1D</GN_ID>
         <TITLE>チョコレイト・ディスコ</TITLE>
       </TRACK>
+      <URL TYPE="COVERART" SIZE="MEDIUM" WIDTH="450" HEIGHT="390">http://example.com/cover.jpg</URL>
     </ALBUM>
   </RESPONSE>
 </RESPONSES>
@@ -98,6 +99,10 @@ module Gracenote
         assert { response.album.gn_id == "153857537-C0E89B7AA71C102BD8986ADD02B0DE9C" }
         assert { response.album.track.track_num == 5 }
         assert { response.album.track.title == "チョコレイト・ディスコ" }
+        assert { response.album.cover_art.size == "MEDIUM" }
+        assert { response.album.cover_art.width == 450 }
+        assert { response.album.cover_art.height == 390 }
+        assert { response.album.cover_art.href == "http://example.com/cover.jpg" }
       end
     end
   end
