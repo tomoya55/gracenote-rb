@@ -70,9 +70,10 @@ module Gracenote
         client = Gracenote::Client.new(client_id: "test", user_id: "test")
         response = client.search(artist: "The Beatles")
         assert { response.ok? == true }
-        assert { response.range["count"] == 10228 }
-        assert { response.range["start"] == 1 }
-        assert { response.range["end"] == 10 }
+        assert { response.range.count == 10228 }
+        assert { response.range.start == 1 }
+        assert { response.range.end == 10 }
+        assert { response.range.next == 11 }
         assert { response.albums.count == 2 }
         assert { response.albums[0].title == "Abbey Road" }
         assert { response.albums[0].tracks[0].title == "Come Together" }

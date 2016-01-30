@@ -1,6 +1,7 @@
 require "faraday"
 require "forwardable"
 require "gracenote/response/album"
+require "gracenote/response/range"
 
 module Gracenote
   class Response
@@ -19,11 +20,11 @@ module Gracenote
     end
 
     def range
-      recursive_downcase_keys body["RESPONSES"]["RESPONSE"]["RANGE"], numerify_values: true
+      Range.new(range_body)
     end
 
     def params
-      recursive_downcase_keys params_body
+      recursive_downcase_keys body["RESPONSES"]["RESPONSE"].reject { |k,v| k == "STATUS" }
     end
 
     def albums
@@ -52,8 +53,8 @@ module Gracenote
 
     private
 
-    def params_body
-      body["RESPONSES"]["RESPONSE"].reject { |k,v| k == "STATUS" }
+    def range_body
+      recursive_downcase_keys body["RESPONSES"]["RESPONSE"]["RANGE"], numerify_values: true
     end
   end
 end
