@@ -8,7 +8,7 @@ module Gracenote
     class Album < Base
       include Helper
 
-      self.attributes = %w[
+      self.attributes = %w(
         gn_id
         artist
         pkg_lang
@@ -16,7 +16,7 @@ module Gracenote
         date
         matched_track_num
         track_count
-      ]
+      )
 
       def track_count
         self["track_count"].to_i

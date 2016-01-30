@@ -3,7 +3,7 @@ require "gracenote/response/base"
 module Gracenote
   class Response
     class Genre < Base
-      self.attributes = %w[id num]
+      self.attributes = %w(id num)
 
       def name
         self["__content__"]

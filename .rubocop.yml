@@ -3,3 +3,6 @@ Metrics/LineLength:
 
 StringLiterals:
   EnforcedStyle: double_quotes
+
+Documentation:
+  Enabled: false
