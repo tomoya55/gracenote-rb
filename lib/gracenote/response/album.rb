@@ -1,4 +1,5 @@
 require "gracenote/response/base"
+require "gracenote/response/genre"
 require "gracenote/response/track"
 
 module Gracenote
@@ -26,6 +27,10 @@ module Gracenote
 
       def track
         tracks[0]
+      end
+
+      def genre
+        Genre.new(self["genre"])
       end
     end
   end

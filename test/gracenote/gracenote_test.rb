@@ -78,6 +78,8 @@ module Gracenote
         assert { response.albums[0].title == "Abbey Road" }
         assert { response.albums[0].tracks[0].title == "Come Together" }
         assert { response.albums[0].tracks[0].track_num == 1 }
+        assert { response.albums[0].genre.name == "60's Rock" }
+        assert { response.albums[0].genre.id == "25332" }
         assert { response.albums[1].title == "Sgt. Pepper's Lonely Hearts Club Band" }
         assert { response.albums[1].tracks[1].title == "With A Little Help From My Friends" }
         assert { response.albums[1].tracks[1].track_num == 2 }
