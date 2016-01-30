@@ -1,23 +1,31 @@
+require "gracenote/response/base"
+require "gracenote/response/track"
+
 module Gracenote
   class Response
-    class Album
-      attr_reader :response
+    class Album < Base
+      include Helper
 
-      def initialize(response)
-        @response = response
-      end
+      self.attributes = %w[
+        gn_id
+        artist
+        title
+        date
+        track_count
+      ]
 
-      def [](attr)
-        response[attr]
+      def track_count
+        self["track_count"].to_i
       end
 
       def tracks
-        case response["track"]
-        when Array
-          response["track"]
-        when Hash
-          [response["track"]]
+        wrap_array(self["track"]).map do |track_attrs|
+          Track.new(track_attrs)
         end
+      end
+
+      def track
+        tracks[0]
       end
     end
   end

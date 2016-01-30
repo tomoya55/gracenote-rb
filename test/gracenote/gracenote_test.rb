@@ -67,16 +67,19 @@ module Gracenote
         XML
         )
 
-        response = Gracenote::Client.new(client_id: "test", user_id: "test").search(artist: "The Beatles")
+        client = Gracenote::Client.new(client_id: "test", user_id: "test")
+        response = client.search(artist: "The Beatles")
         assert { response.ok? == true }
         assert { response.range["count"] == 10228 }
         assert { response.range["start"] == 1 }
         assert { response.range["end"] == 10 }
         assert { response.albums.count == 2 }
-        assert { response.albums[0]["title"] == "Abbey Road" }
-        assert { response.albums[0].tracks[0]["title"] == "Come Together" }
-        assert { response.albums[1]["title"] == "Sgt. Pepper's Lonely Hearts Club Band" }
-        assert { response.albums[1].tracks[1]["title"] == "With A Little Help From My Friends" }
+        assert { response.albums[0].title == "Abbey Road" }
+        assert { response.albums[0].tracks[0].title == "Come Together" }
+        assert { response.albums[0].tracks[0].track_num == 1 }
+        assert { response.albums[1].title == "Sgt. Pepper's Lonely Hearts Club Band" }
+        assert { response.albums[1].tracks[1].title == "With A Little Help From My Friends" }
+        assert { response.albums[1].tracks[1].track_num == 2 }
       end
 
       it "should return the album info" do
@@ -103,9 +106,12 @@ module Gracenote
         XML
         )
 
-        response = Gracenote::Client.new(client_id: "test", user_id: "test").search(artist: "Perfume", album: "GAME", track: "チョコレイト・ディスコ")
+        client = Gracenote::Client.new(client_id: "test", user_id: "test")
+        response = client.search(artist: "Perfume", album: "GAME", track: "チョコレイト・ディスコ")
         assert { response.ok? == true }
-        assert { response.params["album"]["gn_id"] == "153857537-C0E89B7AA71C102BD8986ADD02B0DE9C" }
+        assert { response.album.gn_id == "153857537-C0E89B7AA71C102BD8986ADD02B0DE9C" }
+        assert { response.album.track.track_num == 5 }
+        assert { response.album.track.title == "チョコレイト・ディスコ" }
       end
     end
   end

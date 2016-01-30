@@ -5,6 +5,7 @@ require "gracenote/response/album"
 module Gracenote
   class Response
     extend Forwardable
+    include Helper
     attr_reader :response
 
     def_delegators :@response, :success?
@@ -22,11 +23,15 @@ module Gracenote
     end
 
     def params
-      recursive_downcase_keys body["RESPONSES"]["RESPONSE"].reject { |k,v| k == "STATUS" }
+      recursive_downcase_keys params_body
     end
 
     def albums
-      [*params["album"]].map { |attrs| Album.new(attrs) }
+      wrap_array(params["album"]).map { |attrs| Album.new(attrs) }
+    end
+
+    def album
+      albums[0]
     end
 
     def ok?
@@ -47,28 +52,8 @@ module Gracenote
 
     private
 
-    def recursive_downcase_keys(hash, numerify_values: false)
-      hash.each_with_object({}) do |(k,v), memo|
-        memo[k.downcase] = case v
-        when Hash
-          recursive_downcase_keys(v)
-        when Array
-          v.map do |e|
-            case e
-            when Hash
-              recursive_downcase_keys(e)
-            else
-              e
-            end
-          end
-        else
-          if numerify_values && v =~ /^\d+$/
-            v.to_i
-          else
-            v
-          end
-        end
-      end
+    def params_body
+      body["RESPONSES"]["RESPONSE"].reject { |k,v| k == "STATUS" }
     end
   end
 end
