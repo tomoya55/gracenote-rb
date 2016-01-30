@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Tomoya Hirano"]
   spec.email         = ["hiranotomoya@gmail.com"]
 
-  spec.summary       = %q{Gracenote Client for modern Ruby}
-  spec.description   = %q{Gracenote Client for modern Ruby}
+  spec.summary       = "Gracenote Client for modern Ruby"
+  spec.description   = "Gracenote Client for modern Ruby"
   spec.homepage      = "https://github.com/tomoya55/gracenote-rb"
   spec.license       = "MIT"
 
