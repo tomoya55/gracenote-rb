@@ -1,4 +1,5 @@
 require "nokogiri"
 require "multi_xml"
 require "gyoku"
+require "gracenote/helper"
 require "gracenote/client"

@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Tomoya Hirano"]
   spec.email         = ["hiranotomoya@gmail.com"]
 
-  spec.summary       = %q{Gracenote Client for modern Ruby}
-  spec.description   = %q{Gracenote Client for modern Ruby}
+  spec.summary       = "Gracenote Client for modern Ruby"
+  spec.description   = "Gracenote Client for modern Ruby"
   spec.homepage      = "https://github.com/tomoya55/gracenote-rb"
   spec.license       = "MIT"
 
@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "minitest", "~> 5.0"
   spec.add_development_dependency "minitest-reporters"
   spec.add_development_dependency "minitest-power_assert"
+  spec.add_development_dependency "rspec-mocks"
   spec.add_development_dependency "faraday-conductivity"
   spec.add_development_dependency "webmock"
   spec.add_development_dependency "pry"

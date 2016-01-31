@@ -2,23 +2,6 @@ require "test_helper"
 
 module Gracenote
   describe "client" do
-    describe "#register" do
-      it "should return the userid" do
-        stub_request(:post, //).to_return(headers: { 'Content-Type' => 'applicaiton/xml' }, body: <<-XML
-<RESPONSES>
-  <RESPONSE STATUS="OK">
-    <USER>F3180SG7792B09ZPN7-UFC6XA8FV3RQ80K0RO7FURV76GQSDM16</USER>
-  </RESPONSE>
-</RESPONSES>
-        XML
-        )
-        client = Gracenote::Client.new(client_id: "test")
-        response = client.register
-        assert { response == "F3180SG7792B09ZPN7-UFC6XA8FV3RQ80K0RO7FURV76GQSDM16" }
-        assert { client.user_id == "F3180SG7792B09ZPN7-UFC6XA8FV3RQ80K0RO7FURV76GQSDM16" }
-      end
-    end
-
     describe "#search" do
       it "should return albums" do
         stub_request(:post, //).to_return(headers: { 'Content-Type' => 'applicaiton/xml' }, body: <<-XML
@@ -67,16 +50,22 @@ module Gracenote
         XML
         )
 
-        response = Gracenote::Client.new(client_id: "test", user_id: "test").search(artist: "The Beatles")
+        client = Gracenote::Client.new(client_id: "test", user_id: "test")
+        response = client.search(artist: "The Beatles")
         assert { response.ok? == true }
-        assert { response.range["count"] == 10228 }
-        assert { response.range["start"] == 1 }
-        assert { response.range["end"] == 10 }
+        assert { response.range.count == 10228 }
+        assert { response.range.start == 1 }
+        assert { response.range.end == 10 }
+        assert { response.range.next == 11 }
         assert { response.albums.count == 2 }
-        assert { response.albums[0]["title"] == "Abbey Road" }
-        assert { response.albums[0].tracks[0]["title"] == "Come Together" }
-        assert { response.albums[1]["title"] == "Sgt. Pepper's Lonely Hearts Club Band" }
-        assert { response.albums[1].tracks[1]["title"] == "With A Little Help From My Friends" }
+        assert { response.albums[0].title == "Abbey Road" }
+        assert { response.albums[0].tracks[0].title == "Come Together" }
+        assert { response.albums[0].tracks[0].track_num == 1 }
+        assert { response.albums[0].genre.name == "60's Rock" }
+        assert { response.albums[0].genre.id == "25332" }
+        assert { response.albums[1].title == "Sgt. Pepper's Lonely Hearts Club Band" }
+        assert { response.albums[1].tracks[1].title == "With A Little Help From My Friends" }
+        assert { response.albums[1].tracks[1].track_num == 2 }
       end
 
       it "should return the album info" do
@@ -97,15 +86,23 @@ module Gracenote
         <GN_ID>153857542-F5B1994A6C9EBF79D7FFB02EDF189A1D</GN_ID>
         <TITLE>チョコレイト・ディスコ</TITLE>
       </TRACK>
+      <URL TYPE="COVERART" SIZE="MEDIUM" WIDTH="450" HEIGHT="390">http://example.com/cover.jpg</URL>
     </ALBUM>
   </RESPONSE>
 </RESPONSES>
         XML
         )
 
-        response = Gracenote::Client.new(client_id: "test", user_id: "test").search(artist: "Perfume", album: "GAME", track: "チョコレイト・ディスコ")
+        client = Gracenote::Client.new(client_id: "test", user_id: "test")
+        response = client.search(artist: "Perfume", album: "GAME", track: "チョコレイト・ディスコ")
         assert { response.ok? == true }
-        assert { response.params["album"]["gn_id"] == "153857537-C0E89B7AA71C102BD8986ADD02B0DE9C" }
+        assert { response.album.gn_id == "153857537-C0E89B7AA71C102BD8986ADD02B0DE9C" }
+        assert { response.album.track.track_num == 5 }
+        assert { response.album.track.title == "チョコレイト・ディスコ" }
+        assert { response.album.cover_art.size == "MEDIUM" }
+        assert { response.album.cover_art.width == 450 }
+        assert { response.album.cover_art.height == 390 }
+        assert { response.album.cover_art.href == "http://example.com/cover.jpg" }
       end
     end
   end
