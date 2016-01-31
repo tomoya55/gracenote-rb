@@ -1,6 +1,8 @@
 module Gracenote
   class Response
     class Base
+      include Helper
+
       def self.attributes=(attrs)
         attrs.each do |attr|
           define_method(attr) do
@@ -14,7 +16,14 @@ module Gracenote
       end
 
       def [](attr)
-        @response[attr]
+        values = wrap_array(@response[attr]).map do |value|
+          if value.kind_of?(Hash) && value.has_key?("__content__")
+            value["__content__"]
+          else
+            value
+          end
+        end
+        values.size == 1 ? values[0] : values
       end
 
       def to_h
