@@ -34,10 +34,29 @@ Run this snippet only once and your keep your user_id somewhere.
 
 ### Search
 
+_Search_
+
 ```
 > require 'gracenote-rb'
 > client = Gracenote::Client.new(client_id: 'XXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', user_id: 'F3180SG7792B09ZPN7-UFC6XA8FV3RQ80K0RO7FURV76GQSDM16')
-> client.search(artist: "Suchmos")
+> response = client.search(artist: "Suchmos")
+> response.albums.map(&:title)
+=> ["THE BAY",
+ "Essence",
+ "ROOKIES!!! Campaign Special Sampler CD",
+ "STAY TUNE",
+ "LOVE&VICE"]
+```
+
+_Pagination_
+
+```
+> response = client.search(artist: "Suchmos")
+> response.range.end
+10
+> response = client.search(artist: "Suchmos", range: {start: 11})
+> response.range.to_h
+{"count"=>4460, "start"=>11, "end"=>29}
 ```
 
 ## Development
