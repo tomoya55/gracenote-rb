@@ -72,6 +72,14 @@ module Gracenote
         ).and_call_original
         client.search(album: "The Bends")
       end
+
+      it "should send range" do
+        client = Gracenote::Client.new(client_id: "client_id_string", user_id: "user_id_string")
+        allow(client).to receive(:post).with(
+          %r{<RANGE>\s*<START>10</START>\s*</RANGE>}
+        ).and_call_original
+        client.search(album: "The Bends", range: {start: 10})
+      end
     end
 
     it "should return albums" do

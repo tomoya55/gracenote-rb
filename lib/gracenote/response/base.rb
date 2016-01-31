@@ -16,6 +16,10 @@ module Gracenote
       def [](attr)
         @response[attr]
       end
+
+      def to_h
+        @response
+      end
     end
   end
 end
