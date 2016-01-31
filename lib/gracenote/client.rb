@@ -8,7 +8,8 @@ require "gracenote/response"
 
 module Gracenote
   class Client
-    attr_reader :client_id, :user_id, :lang, :country
+    attr_reader :client_id, :user_id
+    attr_accessor :lang, :country
 
     include Http
     include QueryBuilder
@@ -20,14 +21,7 @@ module Gracenote
       @client_id = client_id
       @user_id = user_id
       @lang = lang || "eng"
-    end
-
-    def lang=(lang)
-      @lang = lang
-    end
-
-    def country=(country)
-      @country = country
+      @country = country || "usa"
     end
 
     def short_client_id
