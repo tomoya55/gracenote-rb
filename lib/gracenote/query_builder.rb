@@ -1,6 +1,6 @@
 module Gracenote
   module QueryBuilder
-    def build_query(cmd, lang: nil, auth: nil)
+    def build_query(cmd, auth: nil, lang: nil, country: nil)
       Nokogiri::XML::Builder.new do |xml|
         xml.QUERIES {
           if auth
@@ -10,6 +10,7 @@ module Gracenote
             }
           end
           xml.LANG lang if lang
+          xml.COUNTRY country if country
           xml.QUERY(CMD: cmd) {
             yield(xml)
           }
