@@ -24,7 +24,7 @@ module Gracenote
       private
 
       def set_range(xml, range)
-        range[:end] ||= range[:start] + 20
+        range[:end] ||= range[:start] + 10
         xml.RANGE {
           xml.START range[:start]
           xml.END range[:end]
