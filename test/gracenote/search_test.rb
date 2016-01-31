@@ -78,7 +78,7 @@ module Gracenote
         allow(client).to receive(:post).with(
           %r{<RANGE>\s*<START>10</START>\s*</RANGE>}
         ).and_call_original
-        client.search(album: "The Bends", range: {start: 10})
+        client.search(album: "The Bends", range: { start: 10 })
       end
     end
 
