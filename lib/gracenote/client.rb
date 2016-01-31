@@ -1,5 +1,6 @@
 require "gracenote/http"
 require "gracenote/query_builder"
+require "gracenote/errors"
 require "gracenote/search"
 require "gracenote/response"
 require "gracenote/auth/registration"
@@ -33,7 +34,7 @@ module Gracenote
     end
 
     def query(cmd, options = {}, &block)
-      request = build_query(cmd, options, &block)
+      request = build_query(cmd, options, &block).to_xml
       response = post(request)
       Response.new(response)
     end

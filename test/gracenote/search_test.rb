@@ -51,24 +51,31 @@ module Gracenote
 
     describe "#request" do
       before do
-        stub_request(:post, //).to_return(headers: { 'Content-Type' => 'applicaiton/xml' }, body: response_xml)
+        stub_request(:post, //).to_return(
+          headers: { "Content-Type" => "applicaiton/xml" },
+          body: response_xml
+        )
       end
 
       it "should send mode" do
         client = Gracenote::Client.new(client_id: "test", user_id: "test")
-        allow(client).to receive(:post).with(%r{<MODE>SINGLE_BEST_COVER</MODE>}).and_call_original
+        allow(client).to receive(:post).with(
+          %r{<MODE>SINGLE_BEST_COVER</MODE>}
+        ).and_call_original
         client.search(album: "The Bends", mode: "SINGLE_BEST_COVER")
       end
 
       it "should send auth" do
         client = Gracenote::Client.new(client_id: "client_id_string", user_id: "user_id_string")
-        allow(client).to receive(:post).with(%r{<AUTH>\s*<CLIENT>client_id_string</CLIENT>\s*<USER>user_id_string</USER>\s*</AUTH>}).and_call_original
+        allow(client).to receive(:post).with(
+          %r{<AUTH>\s*<CLIENT>client_id_string</CLIENT>\s*<USER>user_id_string</USER>\s*</AUTH>}
+        ).and_call_original
         client.search(album: "The Bends")
       end
     end
 
     it "should return albums" do
-      stub_request(:post, //).to_return(headers: { 'Content-Type' => 'applicaiton/xml' }, body: response_xml)
+      stub_request(:post, //).to_return(headers: { "Content-Type" => "applicaiton/xml" }, body: response_xml)
 
       client = Gracenote::Client.new(client_id: "test", user_id: "test")
       response = client.search(artist: "The Beatles")
@@ -89,7 +96,9 @@ module Gracenote
     end
 
     it "should return the album info" do
-      stub_request(:post, //).to_return(headers: { 'Content-Type' => 'applicaiton/xml' }, body: <<-XML
+      stub_request(:post, //).to_return(
+        headers: { "Content-Type" => "applicaiton/xml" },
+        body: <<-XML
 <RESPONSES>
 <RESPONSE STATUS="OK">
   <ALBUM>

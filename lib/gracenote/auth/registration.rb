@@ -5,11 +5,9 @@ module Gracenote
         response = query("register") do |xml|
           xml.CLIENT client_id
         end
-        if response.ok?
-          @user_id = response.params["user"]
-        else
-          raise response.message
-        end
+
+        raise Gracenote::Errors::RequestError.new(response.message) unless response.ok?
+        @user_id = response.params["user"]
       end
     end
   end
