@@ -1,8 +1,11 @@
+Documentation:
+  Enabled: false
+
 Metrics/LineLength:
   Max: 120
 
 StringLiterals:
   EnforcedStyle: double_quotes
 
-Documentation:
-  Enabled: false
+Style/NumericLiterals:
+  MinDigits: 7
