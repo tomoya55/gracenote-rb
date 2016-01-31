@@ -17,7 +17,7 @@ module Gracenote
 
       def [](attr)
         values = wrap_array(@response[attr]).map do |value|
-          if value.kind_of?(Hash) && value.has_key?("__content__")
+          if value.is_a?(Hash) && value.key?("__content__")
             value["__content__"]
           else
             value
