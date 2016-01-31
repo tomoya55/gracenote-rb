@@ -20,7 +20,7 @@ module Gracenote
     end
 
     def range
-      Range.new(range_body)
+      Range.new(range_body) if range_body
     end
 
     def params
@@ -28,7 +28,7 @@ module Gracenote
     end
 
     def albums
-      wrap_array(params["album"]).map { |attrs| Album.new(attrs) }
+      ok? ? wrap_array(params["album"]).map { |attrs| Album.new(attrs) } : []
     end
 
     def album

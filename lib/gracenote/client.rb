@@ -1,10 +1,10 @@
 require "gracenote/http"
 require "gracenote/query_builder"
 require "gracenote/errors"
-require "gracenote/search"
-require "gracenote/fetch"
+require "gracenote/request/register"
+require "gracenote/request/search"
+require "gracenote/request/fetch"
 require "gracenote/response"
-require "gracenote/auth/registration"
 
 module Gracenote
   class Client
@@ -12,9 +12,9 @@ module Gracenote
 
     include Http
     include QueryBuilder
-    include Auth::Registration
-    include Search
-    include Fetch
+    include Request::Register
+    include Request::Search
+    include Request::Fetch
 
     def initialize(client_id:, user_id: nil, lang: nil, country: nil)
       @client_id = client_id

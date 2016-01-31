@@ -1,6 +1,6 @@
 module Gracenote
-  module Auth
-    module Registration
+  module Request
+    module Register
       def register
         response = query("register") do |xml|
           xml.CLIENT client_id
