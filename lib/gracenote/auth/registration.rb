@@ -6,7 +6,7 @@ module Gracenote
           xml.CLIENT client_id
         end
 
-        raise Gracenote::Errors::RequestError.new(response.message) unless response.ok?
+        raise Gracenote::Errors::RequestError, response.message unless response.ok?
         @user_id = response.params["user"]
       end
     end
